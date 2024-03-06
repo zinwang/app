@@ -1,0 +1,78 @@
+Locking [packages] dependencies...
+
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "<frozen importlib._bootstrap>", line 1035, in _handle_fromlist
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/environments.py", line 9, in <module>
+    from pipenv.utils.shell import env_to_bool, is_env_truthy, isatty
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/shell.py", line 23, in <module>
+    def make_posix(path: str) -> str:
+  File "/usr/lib/python3.7/functools.py", line 490, in lru_cache
+    raise TypeError('Expected maxsize to be an integer or None')
+TypeError: Expected maxsize to be an integer or None
+Original exception was:
+Traceback (most recent call last):
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/resolver.py", line 675, in <module>
+    main()
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/resolver.py", line 653, in main
+    _ensure_modules()
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/resolver.py", line 28, in _ensure_modules
+    spec.loader.exec_module(pipenv)
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/__init__.py", line 40, in <module>
+    from pipenv.cli import cli  # noqa
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/__init__.py", line 1, in <module>
+    from .command import cli  # noqa
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/command.py", line 4, in <module>
+    from pipenv import environments
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/environments.py", line 9, in <module>
+    from pipenv.utils.shell import env_to_bool, is_env_truthy, isatty
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/shell.py", line 23, in <module>
+    def make_posix(path: str) -> str:
+  File "/usr/lib/python3.7/functools.py", line 490, in lru_cache
+    raise TypeError('Expected maxsize to be an integer or None')
+TypeError: Expected maxsize to be an integer or None
+
+Traceback (most recent call last):
+  File "/home/zin/.local/bin/pipenv", line 8, in <module>
+    sys.exit(cli())
+             ^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1157, in __call__
+    return self.main(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/options.py", line 58, in main
+    return super().main(*args, **kwargs, windows_expand_args=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1078, in main
+    rv = self.invoke(ctx)
+         ^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1688, in invoke
+    return _process_result(sub_ctx.command.invoke(sub_ctx))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1434, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/decorators.py", line 92, in new_func
+    return ctx.invoke(f, obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 783, in invoke
+    return __callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/decorators.py", line 33, in new_func
+    return f(get_current_context(), *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/command.py", line 340, in lock
+    do_lock(
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/routines/lock.py", line 65, in do_lock
+    venv_resolve_deps(
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/resolver.py", line 849, in venv_resolve_deps
+    c = resolve(cmd, st, project=project)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/resolver.py", line 718, in resolve
+    raise RuntimeError("Failed to lock Pipfile.lock!")
+RuntimeError: Failed to lock Pipfile.lock!
