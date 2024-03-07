@@ -1,5 +1,7 @@
 import pickle
 import time
+from imblearn.over_sampling import RandomOverSampler
+import numpy as np
 import sys
 #Importing the library for Machine Learning Model building
 from sklearn.linear_model import LogisticRegression
@@ -139,7 +141,18 @@ df['Subcategories'] = df['Subcategories'].cat.codes
 X = df.drop(["labels","Subcategories"], axis=1)
 y = df["Subcategories"]
 
-Xtrain_,Xtest_,Ytrain_,Ytest_ = train_test_split(X,y, test_size=0.2, random_state=2, shuffle=True, stratify = y)
+ros = RandomOverSampler(random_state=0)
+X, y = ros.fit_resample(X, y)
+
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_scaled=sc.fit_transform(X)
+pca = PCA(n_components = 0.9)
+X_pca = pca.fit_transform(X_scaled)
+
+
+Xtrain_,Xtest_,Ytrain_,Ytest_ = train_test_split(X_pca,y, test_size=0.2, random_state=2, shuffle=True, stratify = y)
 
 MODEL_OBJECT_NAME = '/home/zin/lab/EEProject/app/model'
 
@@ -148,7 +161,8 @@ with open(MODEL_OBJECT_NAME, 'rb') as f:
 
 start_time = time.time()
 
-result = superLearner.predict(Xtest_.sample(4))
+testX = Xtest_[np.random.choice(Xtest_.shape[0], 4, replace=False)]
+result = superLearner.predict(Xtest_)
 print(result)
 
 end_time = time.time()

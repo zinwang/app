@@ -1,4 +1,6 @@
 import pickle
+import time
+from imblearn.over_sampling import RandomOverSampler
 import sys
 #Importing the library for Machine Learning Model building
 from sklearn.linear_model import LogisticRegression
@@ -22,28 +24,28 @@ df = kdd99.stack().str.decode('utf-8').unstack()
 
 attacks_types = {
     'normal': 'normal',
-'back': 'dos',
-'buffer_overflow': 'u2r',
-'ftp_write': 'r2l',
-'guess_passwd': 'r2l',
-'imap': 'r2l',
-'ipsweep': 'probe',
-'land': 'dos',
-'loadmodule': 'u2r',
-'multihop': 'r2l',
-'neptune': 'dos',
-'nmap': 'probe',
-'perl': 'u2r',
-'phf': 'r2l',
-'pod': 'dos',
-'portsweep': 'probe',
-'rootkit': 'u2r',
-'satan': 'probe',
-'smurf': 'dos',
-'spy': 'r2l',
-'teardrop': 'dos',
-'warezclient': 'r2l',
-'warezmaster': 'r2l',
+    'back': 'dos',
+    'buffer_overflow': 'u2r',
+    'ftp_write': 'r2l',
+    'guess_passwd': 'r2l',
+    'imap': 'r2l',
+    'ipsweep': 'probe',
+    'land': 'dos',
+    'loadmodule': 'u2r',
+    'multihop': 'r2l',
+    'neptune': 'dos',
+    'nmap': 'probe',
+    'perl': 'u2r',
+    'phf': 'r2l',
+    'pod': 'dos',
+    'portsweep': 'probe',
+    'rootkit': 'u2r',
+    'satan': 'probe',
+    'smurf': 'dos',
+    'spy': 'r2l',
+    'teardrop': 'dos',
+    'warezclient': 'r2l',
+    'warezmaster': 'r2l',
 }
 
 df['Subcategories'] = df['labels'].apply(lambda r:attacks_types[r[:-1]])
@@ -136,10 +138,20 @@ df['Subcategories'] = df['Subcategories'].cat.codes
 
 # Defining the data also dropping some unnecessary data
 X = df.drop(["labels","Subcategories"], axis=1)
-#y = df["Subcategories"]
-y = df["labels"]
+y = df["Subcategories"]
 
-Xtrain_,Xtest_,Ytrain_,Ytest_ = train_test_split(X,y, test_size=0.2, random_state=2, shuffle=True, stratify = y)
+ros = RandomOverSampler(random_state=0)
+X, y = ros.fit_resample(X, y)
+
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_scaled=sc.fit_transform(X)
+pca = PCA(n_components = 0.9)
+X_pca = pca.fit_transform(X_scaled)
+
+
+Xtrain_,Xtest_,Ytrain_,Ytest_ = train_test_split(X_pca,y, test_size=0.2, random_state=2, shuffle=True, stratify = y)
 
 superlearner = SuperLearner(scorer=accuracy_score, random_state=0, verbose=10, n_jobs = -1, backend="multiprocessing")
 
