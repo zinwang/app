@@ -1,6 +1,7 @@
 import pickle
 import time
 from imblearn.over_sampling import RandomOverSampler
+import numpy as np
 import sys
 #Importing the library for Machine Learning Model building
 from sklearn.linear_model import LogisticRegression
@@ -134,10 +135,25 @@ df['dst_host_serror_rate'] = df['dst_host_serror_rate'].cat.codes
 df['dst_host_srv_serror_rate'] = df[ 'dst_host_srv_serror_rate'].cat.codes
 df['dst_host_rerror_rate'] = df['dst_host_rerror_rate'].cat.codes
 df['dst_host_srv_rerror_rate'] = df['dst_host_srv_rerror_rate'].cat.codes
-df['Subcategories'] = df['Subcategories'].cat.codes
+#df['Subcategories'] = df['Subcategories'].cat.codes
+
+kddDrop = ['hot',
+           'num_failed_logins',
+           'logged_in',
+           'num_compromised',
+           'root_shell',
+           'su_attempted',
+           'num_root',
+           'num_file_creations',
+           'num_shells',
+           'num_access_files',
+           'num_outbound_cmds',
+           'is_host_login',
+           'is_guest_login']
 
 # Defining the data also dropping some unnecessary data
-X = df.drop(["labels","Subcategories"], axis=1)
+X = df.drop(kddDrop, axis=1)
+X = X.drop(["labels", "Subcategories"], axis=1)
 y = df["Subcategories"]
 
 ros = RandomOverSampler(random_state=0)
@@ -169,9 +185,9 @@ superlearner.add([BaseLayerLR,
                   BaseLayerRF
                   ], proba=True)
 #SecondLayer, replaced the SVC with decision tree classifier
-#superlearner.add([IntermediateLayerMLP,
-#                  IntermediateLayerLD
-#                  ], proba=True)
+superlearner.add([IntermediateLayerMLP,
+                  IntermediateLayerLD
+                  ], proba=True)
 
 # Attach the final meta estimator
 superlearner.add_meta(MetaLayerLR)

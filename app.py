@@ -135,10 +135,25 @@ df['dst_host_serror_rate'] = df['dst_host_serror_rate'].cat.codes
 df['dst_host_srv_serror_rate'] = df[ 'dst_host_srv_serror_rate'].cat.codes
 df['dst_host_rerror_rate'] = df['dst_host_rerror_rate'].cat.codes
 df['dst_host_srv_rerror_rate'] = df['dst_host_srv_rerror_rate'].cat.codes
-df['Subcategories'] = df['Subcategories'].cat.codes
+#df['Subcategories'] = df['Subcategories'].cat.codes
+
+kddDrop = ['hot',
+           'num_failed_logins',
+           'logged_in',
+           'num_compromised',
+           'root_shell',
+           'su_attempted',
+           'num_root',
+           'num_file_creations',
+           'num_shells',
+           'num_access_files',
+           'num_outbound_cmds',
+           'is_host_login',
+           'is_guest_login']
 
 # Defining the data also dropping some unnecessary data
-X = df.drop(["labels","Subcategories"], axis=1)
+X = df.drop(kddDrop, axis=1)
+X = X.drop(["labels", "Subcategories"], axis=1)
 y = df["Subcategories"]
 
 ros = RandomOverSampler(random_state=0)
