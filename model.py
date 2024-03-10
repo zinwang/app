@@ -150,7 +150,7 @@ superlearner = SuperLearner(scorer=accuracy_score, random_state=0, verbose=10, n
 # Build the first layer
 
 BaseLayerLR = LogisticRegression(max_iter=1e4,class_weight="balanced",verbose=3,random_state=2,n_jobs=-1)
-BaseLayerRF = RandomForestClassifier(n_estimators=10, random_state=0 ,class_weight="balanced",max_features="sqrt",max_depth=5,max_leaf_nodes=10,verbose=3,n_jobs=-1)
+BaseLayerRF = RandomForestClassifier(n_estimators=3, random_state=0 ,class_weight="balanced",max_features="sqrt",max_depth=5,max_leaf_nodes=10,verbose=3,n_jobs=-1)
 
 IntermediateLayerMLP = MLPClassifier(solver='adam', alpha=1e-5, hidden_layer_sizes=(5, 5), shuffle=True,verbose=3,random_state=2)
 IntermediateLayerLD = LinearDiscriminantAnalysis()
