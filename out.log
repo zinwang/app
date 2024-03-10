@@ -1,78 +1,778 @@
-Locking [packages] dependencies...
+[MLENS] backend: threading
 
-Error in sys.excepthook:
+Predicting 3 layers
+[INFO] n_jobs = -1
+[INFO] backend = 'multiprocessing'
+[INFO] start_method = 'fork'
+[INFO] cache = '/tmp'
+
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py:451: UserWarning: X does not have valid feature names, but LogisticRegression was fitted with feature names
+  "X does not have valid feature names, but"
+multiprocessing.pool.RemoteTraceback: 
+"""
 Traceback (most recent call last):
-  File "<frozen importlib._bootstrap>", line 1035, in _handle_fromlist
-  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/environments.py", line 9, in <module>
-    from pipenv.utils.shell import env_to_bool, is_env_truthy, isatty
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/shell.py", line 23, in <module>
-    def make_posix(path: str) -> str:
-  File "/usr/lib/python3.7/functools.py", line 490, in lru_cache
-    raise TypeError('Expected maxsize to be an integer or None')
-TypeError: Expected maxsize to be an integer or None
-Original exception was:
-Traceback (most recent call last):
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/resolver.py", line 675, in <module>
-    main()
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/resolver.py", line 653, in main
-    _ensure_modules()
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/resolver.py", line 28, in _ensure_modules
-    spec.loader.exec_module(pipenv)
-  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
-  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/__init__.py", line 40, in <module>
-    from pipenv.cli import cli  # noqa
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/__init__.py", line 1, in <module>
-    from .command import cli  # noqa
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/command.py", line 4, in <module>
-    from pipenv import environments
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/environments.py", line 9, in <module>
-    from pipenv.utils.shell import env_to_bool, is_env_truthy, isatty
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/shell.py", line 23, in <module>
-    def make_posix(path: str) -> str:
-  File "/usr/lib/python3.7/functools.py", line 490, in lru_cache
-    raise TypeError('Expected maxsize to be an integer or None')
-TypeError: Expected maxsize to be an integer or None
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/_parallel_backends.py", line 350, in __call__
+    return self.func(*args, **kwargs)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py", line 135, in __call__
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py", line 135, in <listcomp>
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py", line 124, in __call__
+    return getattr(self, self.job)()
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py", line 159, in predict
+    self._predict(transformers, False)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py", line 199, in _predict
+    predictions = getattr(self.estimator, self.attr)(xtemp)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py", line 425, in predict
+    scores = self.decision_function(X)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py", line 407, in decision_function
+    X = self._validate_data(X, accept_sparse="csr", reset=False)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py", line 585, in _validate_data
+    self._check_n_features(X, reset=reset)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py", line 401, in _check_n_features
+    f"X has {n_features} features, but {self.__class__.__name__} "
+ValueError: X has 11 features, but LogisticRegression is expecting 41 features as input.
+
+During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
-  File "/home/zin/.local/bin/pipenv", line 8, in <module>
-    sys.exit(cli())
-             ^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1157, in __call__
-    return self.main(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/options.py", line 58, in main
-    return super().main(*args, **kwargs, windows_expand_args=False)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1078, in main
-    rv = self.invoke(ctx)
-         ^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1688, in invoke
-    return _process_result(sub_ctx.command.invoke(sub_ctx))
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 1434, in invoke
-    return ctx.invoke(self.callback, **ctx.params)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 783, in invoke
-    return __callback(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/decorators.py", line 92, in new_func
-    return ctx.invoke(f, obj, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/core.py", line 783, in invoke
-    return __callback(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/vendor/click/decorators.py", line 33, in new_func
-    return f(get_current_context(), *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/cli/command.py", line 340, in lock
-    do_lock(
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/routines/lock.py", line 65, in do_lock
-    venv_resolve_deps(
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/resolver.py", line 849, in venv_resolve_deps
-    c = resolve(cmd, st, project=project)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/zin/.local/lib/python3.11/site-packages/pipenv/utils/resolver.py", line 718, in resolve
-    raise RuntimeError("Failed to lock Pipfile.lock!")
-RuntimeError: Failed to lock Pipfile.lock!
+  File "/usr/lib/python3.7/multiprocessing/pool.py", line 121, in worker
+    result = (True, func(*args, **kwds))
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/_parallel_backends.py", line 359, in __call__
+    raise TransportableException(text, e_type)
+mlens.externals.joblib.my_exceptions.TransportableException: TransportableException
+___________________________________________________________________________
+ValueError                                         Sun Mar 10 18:40:27 2024
+PID: 102065Python 3.7.17: /home/zin/.local/share/virtualenvs/app-DP8OA3i1/bin/python
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py in __call__(self=<mlens.externals.joblib.parallel.BatchedCalls object>)
+    130     def __init__(self, iterator_slice):
+    131         self.items = list(iterator_slice)
+    132         self._size = len(self.items)
+    133 
+    134     def __call__(self):
+--> 135         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        self.items = [(<mlens.parallel.learner.SubLearner object>, (), {})]
+    136 
+    137     def __len__(self):
+    138         return self._size
+    139 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
+    130     def __init__(self, iterator_slice):
+    131         self.items = list(iterator_slice)
+    132         self._size = len(self.items)
+    133 
+    134     def __call__(self):
+--> 135         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        func = <mlens.parallel.learner.SubLearner object>
+        args = ()
+        kwargs = {}
+    136 
+    137     def __len__(self):
+    138         return self._size
+    139 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in __call__(self=<mlens.parallel.learner.SubLearner object>)
+    119         else:
+    120             self.processing_index = ''
+    121 
+    122     def __call__(self):
+    123         """Launch job"""
+--> 124         return getattr(self, self.job)()
+        self = <mlens.parallel.learner.SubLearner object>
+        self.job = 'predict'
+    125 
+    126     def fit(self, path=None):
+    127         """Fit sub-learner"""
+    128         if path is None:
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in predict(self=<mlens.parallel.learner.SubLearner object>, path='/tmp/.mlens_tmp_cache_hhskd7sn/task_0')
+    154         if path is None:
+    155             path = self.path
+    156         t0 = time()
+    157         transformers = self._load_preprocess(path)
+    158 
+--> 159         self._predict(transformers, False)
+        self._predict = <bound method SubLearner._predict of <mlens.parallel.learner.SubLearner object>>
+        transformers = None
+    160         if self.verbose:
+    161             msg = "{:<30} {}".format(self.name_index, "done")
+    162             f = "stdout" if self.verbose < 10 - 3 else "stderr"
+    163             print_time(t0, msg, file=f)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in _predict(self=<mlens.parallel.learner.SubLearner object>, transformers=None, score_preds=False)
+    194         xtemp, ytemp = slice_array(self.in_array, self.targets, self.out_index)
+    195         t0 = time()
+    196 
+    197         if transformers:
+    198             xtemp, ytemp = transformers.transform(xtemp, ytemp)
+--> 199         predictions = getattr(self.estimator, self.attr)(xtemp)
+        predictions = undefined
+        self.estimator = LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3)
+        self.attr = 'predict'
+        xtemp = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+    200 
+    201         self.pred_time_ = time() - t0
+    202 
+    203         # Assign predictions to matrix
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py in predict(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]))
+    420         Returns
+    421         -------
+    422         y_pred : ndarray of shape (n_samples,)
+    423             Vector containing the class labels for each sample.
+    424         """
+--> 425         scores = self.decision_function(X)
+        scores = undefined
+        self.decision_function = <bound method LinearClassifierMixin.decision_fun...1,
+                   random_state=2, verbose=3)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+    426         if len(scores.shape) == 1:
+    427             indices = (scores > 0).astype(int)
+    428         else:
+    429             indices = scores.argmax(axis=1)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py in decision_function(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]))
+    402             binary case, confidence score for `self.classes_[1]` where >0 means
+    403             this class would be predicted.
+    404         """
+    405         check_is_fitted(self)
+    406 
+--> 407         X = self._validate_data(X, accept_sparse="csr", reset=False)
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        self._validate_data = <bound method BaseEstimator._validate_data of Lo...1,
+                   random_state=2, verbose=3)>
+    408         scores = safe_sparse_dot(X, self.coef_.T, dense_output=True) + self.intercept_
+    409         return scores.ravel() if scores.shape[1] == 1 else scores
+    410 
+    411     def predict(self, X):
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py in _validate_data(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), y='no_validation', reset=False, validate_separately=False, **check_params={'accept_sparse': 'csr'})
+    580             else:
+    581                 X, y = check_X_y(X, y, **check_params)
+    582             out = X, y
+    583 
+    584         if not no_val_X and check_params.get("ensure_2d", True):
+--> 585             self._check_n_features(X, reset=reset)
+        self._check_n_features = <bound method BaseEstimator._check_n_features of...1,
+                   random_state=2, verbose=3)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        reset = False
+    586 
+    587         return out
+    588 
+    589     @property
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py in _check_n_features(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), reset=False)
+    396             # for stateless transformers.
+    397             return
+    398 
+    399         if n_features != self.n_features_in_:
+    400             raise ValueError(
+--> 401                 f"X has {n_features} features, but {self.__class__.__name__} "
+    402                 f"is expecting {self.n_features_in_} features as input."
+    403             )
+    404 
+    405     def _check_feature_names(self, X, *, reset):
+
+ValueError: X has 11 features, but LogisticRegression is expecting 41 features as input.
+___________________________________________________________________________
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py", line 703, in retrieve
+    self._output.extend(job.get(timeout=self.timeout))
+  File "/usr/lib/python3.7/multiprocessing/pool.py", line 657, in get
+    raise self._value
+mlens.externals.joblib.my_exceptions.TransportableException: TransportableException
+___________________________________________________________________________
+ValueError                                         Sun Mar 10 18:40:27 2024
+PID: 102065Python 3.7.17: /home/zin/.local/share/virtualenvs/app-DP8OA3i1/bin/python
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py in __call__(self=<mlens.externals.joblib.parallel.BatchedCalls object>)
+    130     def __init__(self, iterator_slice):
+    131         self.items = list(iterator_slice)
+    132         self._size = len(self.items)
+    133 
+    134     def __call__(self):
+--> 135         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        self.items = [(<mlens.parallel.learner.SubLearner object>, (), {})]
+    136 
+    137     def __len__(self):
+    138         return self._size
+    139 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
+    130     def __init__(self, iterator_slice):
+    131         self.items = list(iterator_slice)
+    132         self._size = len(self.items)
+    133 
+    134     def __call__(self):
+--> 135         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        func = <mlens.parallel.learner.SubLearner object>
+        args = ()
+        kwargs = {}
+    136 
+    137     def __len__(self):
+    138         return self._size
+    139 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in __call__(self=<mlens.parallel.learner.SubLearner object>)
+    119         else:
+    120             self.processing_index = ''
+    121 
+    122     def __call__(self):
+    123         """Launch job"""
+--> 124         return getattr(self, self.job)()
+        self = <mlens.parallel.learner.SubLearner object>
+        self.job = 'predict'
+    125 
+    126     def fit(self, path=None):
+    127         """Fit sub-learner"""
+    128         if path is None:
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in predict(self=<mlens.parallel.learner.SubLearner object>, path='/tmp/.mlens_tmp_cache_hhskd7sn/task_0')
+    154         if path is None:
+    155             path = self.path
+    156         t0 = time()
+    157         transformers = self._load_preprocess(path)
+    158 
+--> 159         self._predict(transformers, False)
+        self._predict = <bound method SubLearner._predict of <mlens.parallel.learner.SubLearner object>>
+        transformers = None
+    160         if self.verbose:
+    161             msg = "{:<30} {}".format(self.name_index, "done")
+    162             f = "stdout" if self.verbose < 10 - 3 else "stderr"
+    163             print_time(t0, msg, file=f)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in _predict(self=<mlens.parallel.learner.SubLearner object>, transformers=None, score_preds=False)
+    194         xtemp, ytemp = slice_array(self.in_array, self.targets, self.out_index)
+    195         t0 = time()
+    196 
+    197         if transformers:
+    198             xtemp, ytemp = transformers.transform(xtemp, ytemp)
+--> 199         predictions = getattr(self.estimator, self.attr)(xtemp)
+        predictions = undefined
+        self.estimator = LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3)
+        self.attr = 'predict'
+        xtemp = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+    200 
+    201         self.pred_time_ = time() - t0
+    202 
+    203         # Assign predictions to matrix
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py in predict(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]))
+    420         Returns
+    421         -------
+    422         y_pred : ndarray of shape (n_samples,)
+    423             Vector containing the class labels for each sample.
+    424         """
+--> 425         scores = self.decision_function(X)
+        scores = undefined
+        self.decision_function = <bound method LinearClassifierMixin.decision_fun...1,
+                   random_state=2, verbose=3)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+    426         if len(scores.shape) == 1:
+    427             indices = (scores > 0).astype(int)
+    428         else:
+    429             indices = scores.argmax(axis=1)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py in decision_function(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]))
+    402             binary case, confidence score for `self.classes_[1]` where >0 means
+    403             this class would be predicted.
+    404         """
+    405         check_is_fitted(self)
+    406 
+--> 407         X = self._validate_data(X, accept_sparse="csr", reset=False)
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        self._validate_data = <bound method BaseEstimator._validate_data of Lo...1,
+                   random_state=2, verbose=3)>
+    408         scores = safe_sparse_dot(X, self.coef_.T, dense_output=True) + self.intercept_
+    409         return scores.ravel() if scores.shape[1] == 1 else scores
+    410 
+    411     def predict(self, X):
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py in _validate_data(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), y='no_validation', reset=False, validate_separately=False, **check_params={'accept_sparse': 'csr'})
+    580             else:
+    581                 X, y = check_X_y(X, y, **check_params)
+    582             out = X, y
+    583 
+    584         if not no_val_X and check_params.get("ensure_2d", True):
+--> 585             self._check_n_features(X, reset=reset)
+        self._check_n_features = <bound method BaseEstimator._check_n_features of...1,
+                   random_state=2, verbose=3)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        reset = False
+    586 
+    587         return out
+    588 
+    589     @property
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py in _check_n_features(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), reset=False)
+    396             # for stateless transformers.
+    397             return
+    398 
+    399         if n_features != self.n_features_in_:
+    400             raise ValueError(
+--> 401                 f"X has {n_features} features, but {self.__class__.__name__} "
+    402                 f"is expecting {self.n_features_in_} features as input."
+    403             )
+    404 
+    405     def _check_feature_names(self, X, *, reset):
+
+ValueError: X has 11 features, but LogisticRegression is expecting 41 features as input.
+___________________________________________________________________________
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "rapp.py", line 130, in <module>
+    packetScan(superlearner, 4)
+  File "rapp.py", line 122, in packetScan
+    detecter(model, df)
+  File "rapp.py", line 103, in detecter
+    result = model.predict(X)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/ensemble/base.py", line 610, in predict
+    return self._backend.predict(X, **kwargs)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/ensemble/base.py", line 206, in predict
+    out = self._predict(X, 'predict', **kwargs)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/ensemble/base.py", line 266, in _predict
+    out = manager.stack(self, job, X, return_preds=r, **kwargs)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/backend.py", line 673, in stack
+    return self.process(caller=caller, out=out, **kwargs)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/backend.py", line 718, in process
+    self._partial_process(task, parallel, **kwargs)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/backend.py", line 739, in _partial_process
+    task(self.job.args(**kwargs), parallel=parallel)
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/layer.py", line 152, in __call__
+    for learner in self.learners
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py", line 793, in __call__
+    self.retrieve()
+  File "/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py", line 744, in retrieve
+    raise exception
+mlens.externals.joblib.my_exceptions.JoblibValueError: JoblibValueError
+___________________________________________________________________________
+Multiprocessing exception:
+...........................................................................
+/home/zin/lab/EEProject/app/rapp.py in <module>()
+    125     process.terminate()
+    126 
+    127 
+    128 
+    129 superlearner = modelLoder(MODEL_PATH)
+--> 130 packetScan(superlearner, 4)
+    131 
+    132 
+    133 
+    134 """
+
+...........................................................................
+/home/zin/lab/EEProject/app/rapp.py in packetScan(model=SuperLearner(array_check=None, backend=None, fol...x7f1e343d3b90>, shuffle=False,
+       verbose=10), numOfPacketPerBatch=4)
+    117         row = line.decode('utf-8').strip().split(',')
+    118         data.append(row)
+    119 
+    120         if len(data) == numOfPacketPerBatch:
+    121             df = pd.DataFrame(data, columns=COLUMNS)
+--> 122             detecter(model, df)
+        model = SuperLearner(array_check=None, backend=None, fol...x7f1e343d3b90>, shuffle=False,
+       verbose=10)
+        df =    duration  protocol_type  service  flag  ...  ...                       0.0
+
+[4 rows x 28 columns]
+    123             data = []
+    124 
+    125     process.terminate()
+    126 
+
+...........................................................................
+/home/zin/lab/EEProject/app/rapp.py in detecter(model=SuperLearner(array_check=None, backend=None, fol...x7f1e343d3b90>, shuffle=False,
+       verbose=10), dataFrame=   duration  protocol_type  service  flag  ...  ...                       0.0
+
+[4 rows x 28 columns])
+     98 
+     99 
+    100 def detecter(model: Any, dataFrame: pd.DataFrame):
+    101     X = featureExt(dataFrame)
+    102     start_time = time.time()
+--> 103     result = model.predict(X)
+        result = undefined
+        model.predict = <bound method BaseEnsemble.predict of SuperLearn...7f1e343d3b90>, shuffle=False,
+       verbose=10)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+    104     print(result)
+    105     end_time = time.time()
+    106     print("Time", end_time-start_time)
+    107 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/ensemble/base.py in predict(self=SuperLearner(array_check=None, backend=None, fol...x7f1e343d3b90>, shuffle=False,
+       verbose=10), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), **kwargs={})
+    605             predictions for provided input array.
+    606         """
+    607         if not check_ensemble_build(self._backend):
+    608             # No layers instantiated, but raise_on_exception is False
+    609             return
+--> 610         return self._backend.predict(X, **kwargs)
+        self._backend.predict = <bound method Sequential.predict of Sequential(b...sformers=[])],
+   verbose=9)],
+      verbose=10)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        kwargs = {}
+    611 
+    612     def predict_proba(self, X, **kwargs):
+    613         """Predict class probabilities with fitted ensemble.
+    614 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/ensemble/base.py in predict(self=Sequential(backend='multiprocessing', dtype=<cla...nsformers=[])],
+   verbose=9)],
+      verbose=10), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), **kwargs={})
+    201         if not self.__fitted__:
+    202             NotFittedError("Instance not fitted.")
+    203 
+    204         f, t0 = print_job(self, "Predicting")
+    205 
+--> 206         out = self._predict(X, 'predict', **kwargs)
+        out = undefined
+        self._predict = <bound method Sequential._predict of Sequential(...sformers=[])],
+   verbose=9)],
+      verbose=10)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        kwargs = {}
+    207 
+    208         if self.verbose:
+    209             print_time(t0, "{:<35}".format("Predict complete"),
+    210                        file=f, flush=True)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/ensemble/base.py in _predict(self=Sequential(backend='multiprocessing', dtype=<cla...nsformers=[])],
+   verbose=9)],
+      verbose=10), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), job='predict', **kwargs={})
+    261             data.
+    262         """
+    263         r = kwargs.pop('return_preds', True)
+    264         with ParallelProcessing(self.backend, self.n_jobs,
+    265                                 max(self.verbose - 4, 0)) as manager:
+--> 266             out = manager.stack(self, job, X, return_preds=r, **kwargs)
+        out = undefined
+        manager.stack = <bound method ParallelProcessing.stack of <mlens.parallel.backend.ParallelProcessing object>>
+        self = Sequential(backend='multiprocessing', dtype=<cla...nsformers=[])],
+   verbose=9)],
+      verbose=10)
+        job = 'predict'
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        r = True
+        kwargs = {}
+    267 
+    268         if not isinstance(out, list):
+    269             out = [out]
+    270         out = [p.squeeze() for p in out]
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/backend.py in stack(self=<mlens.parallel.backend.ParallelProcessing object>, caller=Sequential(backend='multiprocessing', dtype=<cla...nsformers=[])],
+   verbose=9)],
+      verbose=10), job='predict', X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), y=None, path=None, return_preds=True, warm_start=False, split=True, **kwargs={})
+    668             Prediction array(s).
+    669         """
+    670         out = self.initialize(
+    671             job=job, X=X, y=y, path=path, warm_start=warm_start,
+    672             return_preds=return_preds, split=split, stack=True)
+--> 673         return self.process(caller=caller, out=out, **kwargs)
+        self.process = <bound method ParallelProcessing.process of <mlens.parallel.backend.ParallelProcessing object>>
+        caller = Sequential(backend='multiprocessing', dtype=<cla...nsformers=[])],
+   verbose=9)],
+      verbose=10)
+        out = {}
+        kwargs = {}
+    674 
+    675     def process(self, caller, out, **kwargs):
+    676         """Process job.
+    677 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/backend.py in process(self=<mlens.parallel.backend.ParallelProcessing object>, caller=Sequential(backend='multiprocessing', dtype=<cla...nsformers=[])],
+   verbose=9)],
+      verbose=10), out=None, **kwargs={})
+    713                       backend=self.backend) as parallel:
+    714 
+    715             for task in caller:
+    716                 self.job.clear()
+    717 
+--> 718                 self._partial_process(task, parallel, **kwargs)
+        self._partial_process = <bound method ParallelProcessing._partial_proces...lens.parallel.backend.ParallelProcessing object>>
+        task = Layer(backend='threading', dtype=<class 'numpy.f..._exception=True, transformers=[])],
+   verbose=9)
+        parallel = Parallel(n_jobs=-1)
+        kwargs = {}
+    719 
+    720                 if task.name in return_names:
+    721                     out.append(self.get_preds(dtype=_dtype(task)))
+    722 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/backend.py in _partial_process(self=<mlens.parallel.backend.ParallelProcessing object>, task=Layer(backend='threading', dtype=<class 'numpy.f..._exception=True, transformers=[])],
+   verbose=9), parallel=Parallel(n_jobs=-1), **kwargs={})
+    734         task.setup(self.job.predict_in, self.job.targets, self.job.job)
+    735 
+    736         if not task.__no_output__:
+    737             self._gen_prediction_array(task, self.job.job, self.__threading__)
+    738 
+--> 739         task(self.job.args(**kwargs), parallel=parallel)
+        task = Layer(backend='threading', dtype=<class 'numpy.f..._exception=True, transformers=[])],
+   verbose=9)
+        self.job.args = <bound method Job.args of <mlens.parallel.backend.Job object>>
+        kwargs = {}
+        parallel = Parallel(n_jobs=-1)
+    740 
+    741         if not task.__no_output__ and getattr(task, 'n_feature_prop', 0):
+    742             self._propagate_features(task)
+    743 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/layer.py in __call__(self=Layer(backend='threading', dtype=<class 'numpy.f..._exception=True, transformers=[])],
+   verbose=9), args={'auxiliary': {'P': None, 'X': memmap([[ 3.63960121,  0.92121464,  2.19342369, ... 0.05189313,  0.19600441,
+          0.38851352]])}, 'dir': '/tmp/.mlens_tmp_cache_hhskd7sn/task_0', 'job': 'predict', 'main': {'P': memmap([[0., 0.],
+        [0., 0.],
+        [0., 0.],
+        [0., 0.]], dtype=float32), 'X': memmap([[ 3.63960121,  0.92121464,  2.19342369, ... 0.05189313,  0.19600441,
+          0.38851352]])}}, parallel=Parallel(n_jobs=-1))
+    147         if self.verbose >= 2:
+    148             safe_print(msg.format('Learners ...'), file=f, end=e2)
+    149             t1 = time()
+    150 
+    151         parallel(delayed(sublearner, not _threading)()
+--> 152                  for learner in self.learners
+        self.learners = [Learner(attr='predict', backend='threading', dty...orer=<function accuracy_score at 0x7f1e343d3b90>), Learner(attr='predict', backend='threading', dty...orer=<function accuracy_score at 0x7f1e343d3b90>)]
+    153                  for sublearner in learner(args, 'main'))
+    154 
+    155         if self.verbose >= 2:
+    156             print_time(t1, 'done', file=f)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py in __call__(self=Parallel(n_jobs=-1), iterable=<generator object Layer.__call__.<locals>.<genexpr>>)
+    788             if pre_dispatch == "all" or n_jobs == 1:
+    789                 # The iterable was consumed all at once by the above for loop.
+    790                 # No need to wait for async callbacks to trigger to
+    791                 # consumption.
+    792                 self._iterating = False
+--> 793             self.retrieve()
+        self.retrieve = <bound method Parallel.retrieve of Parallel(n_jobs=-1)>
+    794             # Make sure that we get a last message telling us we are done
+    795             elapsed_time = time.time() - self._start_time
+    796             self._print('Done %3i out of %3i | elapsed: %s finished',
+    797                         (len(self._output), len(self._output),
+
+---------------------------------------------------------------------------
+Sub-process traceback:
+---------------------------------------------------------------------------
+ValueError                                         Sun Mar 10 18:40:27 2024
+PID: 102065Python 3.7.17: /home/zin/.local/share/virtualenvs/app-DP8OA3i1/bin/python
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py in __call__(self=<mlens.externals.joblib.parallel.BatchedCalls object>)
+    130     def __init__(self, iterator_slice):
+    131         self.items = list(iterator_slice)
+    132         self._size = len(self.items)
+    133 
+    134     def __call__(self):
+--> 135         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        self.items = [(<mlens.parallel.learner.SubLearner object>, (), {})]
+    136 
+    137     def __len__(self):
+    138         return self._size
+    139 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/externals/joblib/parallel.py in <listcomp>(.0=<list_iterator object>)
+    130     def __init__(self, iterator_slice):
+    131         self.items = list(iterator_slice)
+    132         self._size = len(self.items)
+    133 
+    134     def __call__(self):
+--> 135         return [func(*args, **kwargs) for func, args, kwargs in self.items]
+        func = <mlens.parallel.learner.SubLearner object>
+        args = ()
+        kwargs = {}
+    136 
+    137     def __len__(self):
+    138         return self._size
+    139 
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in __call__(self=<mlens.parallel.learner.SubLearner object>)
+    119         else:
+    120             self.processing_index = ''
+    121 
+    122     def __call__(self):
+    123         """Launch job"""
+--> 124         return getattr(self, self.job)()
+        self = <mlens.parallel.learner.SubLearner object>
+        self.job = 'predict'
+    125 
+    126     def fit(self, path=None):
+    127         """Fit sub-learner"""
+    128         if path is None:
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in predict(self=<mlens.parallel.learner.SubLearner object>, path='/tmp/.mlens_tmp_cache_hhskd7sn/task_0')
+    154         if path is None:
+    155             path = self.path
+    156         t0 = time()
+    157         transformers = self._load_preprocess(path)
+    158 
+--> 159         self._predict(transformers, False)
+        self._predict = <bound method SubLearner._predict of <mlens.parallel.learner.SubLearner object>>
+        transformers = None
+    160         if self.verbose:
+    161             msg = "{:<30} {}".format(self.name_index, "done")
+    162             f = "stdout" if self.verbose < 10 - 3 else "stderr"
+    163             print_time(t0, msg, file=f)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/mlens/parallel/learner.py in _predict(self=<mlens.parallel.learner.SubLearner object>, transformers=None, score_preds=False)
+    194         xtemp, ytemp = slice_array(self.in_array, self.targets, self.out_index)
+    195         t0 = time()
+    196 
+    197         if transformers:
+    198             xtemp, ytemp = transformers.transform(xtemp, ytemp)
+--> 199         predictions = getattr(self.estimator, self.attr)(xtemp)
+        predictions = undefined
+        self.estimator = LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3)
+        self.attr = 'predict'
+        xtemp = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+    200 
+    201         self.pred_time_ = time() - t0
+    202 
+    203         # Assign predictions to matrix
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py in predict(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]))
+    420         Returns
+    421         -------
+    422         y_pred : ndarray of shape (n_samples,)
+    423             Vector containing the class labels for each sample.
+    424         """
+--> 425         scores = self.decision_function(X)
+        scores = undefined
+        self.decision_function = <bound method LinearClassifierMixin.decision_fun...1,
+                   random_state=2, verbose=3)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+    426         if len(scores.shape) == 1:
+    427             indices = (scores > 0).astype(int)
+    428         else:
+    429             indices = scores.argmax(axis=1)
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/linear_model/_base.py in decision_function(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]))
+    402             binary case, confidence score for `self.classes_[1]` where >0 means
+    403             this class would be predicted.
+    404         """
+    405         check_is_fitted(self)
+    406 
+--> 407         X = self._validate_data(X, accept_sparse="csr", reset=False)
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        self._validate_data = <bound method BaseEstimator._validate_data of Lo...1,
+                   random_state=2, verbose=3)>
+    408         scores = safe_sparse_dot(X, self.coef_.T, dense_output=True) + self.intercept_
+    409         return scores.ravel() if scores.shape[1] == 1 else scores
+    410 
+    411     def predict(self, X):
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py in _validate_data(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), y='no_validation', reset=False, validate_separately=False, **check_params={'accept_sparse': 'csr'})
+    580             else:
+    581                 X, y = check_X_y(X, y, **check_params)
+    582             out = X, y
+    583 
+    584         if not no_val_X and check_params.get("ensure_2d", True):
+--> 585             self._check_n_features(X, reset=reset)
+        self._check_n_features = <bound method BaseEstimator._check_n_features of...1,
+                   random_state=2, verbose=3)>
+        X = array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]])
+        reset = False
+    586 
+    587         return out
+    588 
+    589     @property
+
+...........................................................................
+/home/zin/.local/share/virtualenvs/app-DP8OA3i1/lib/python3.7/site-packages/sklearn/base.py in _check_n_features(self=LogisticRegression(class_weight='balanced', max_...-1,
+                   random_state=2, verbose=3), X=array([[ 3.63960121,  0.92121464,  2.19342369, -...  0.05189313,  0.19600441,
+         0.38851352]]), reset=False)
+    396             # for stateless transformers.
+    397             return
+    398 
+    399         if n_features != self.n_features_in_:
+    400             raise ValueError(
+--> 401                 f"X has {n_features} features, but {self.__class__.__name__} "
+    402                 f"is expecting {self.n_features_in_} features as input."
+    403             )
+    404 
+    405     def _check_feature_names(self, X, *, reset):
+
+ValueError: X has 11 features, but LogisticRegression is expecting 41 features as input.
+___________________________________________________________________________

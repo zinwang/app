@@ -1,7 +1,8 @@
 import pickle
+from typing import Any
 import time
-from imblearn.over_sampling import RandomOverSampler
 import numpy as np
+import pandas as pd
 import sys
 #Importing the library for Machine Learning Model building
 from sklearn.linear_model import LogisticRegression
@@ -16,7 +17,7 @@ seed = 2017
 import sklearn.model_selection
 from mlens.ensemble import SuperLearner
 
-columns = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
+COLUMNS = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
            'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'count', 'srv_count',
            'serror_rate', 'srv_serror_rate', 'rerror_rate', 'srv_rerror_rate',
            'same_srv_rate', 'diff_srv_rate', 'srv_diff_host_rate',
@@ -26,33 +27,117 @@ columns = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
            'dst_host_srv_serror_rate', 'dst_host_rerror_rate',
            'dst_host_srv_rerror_rate']
 
+PROJECT_PATH = "/home/zin/lab/EEProject/app/"
+MODEL_PATH = f'{PROJECT_PATH}model'
 
+PROTO_MODEL_NAME = f'{PROJECT_PATH}proto'
+SERVICE_MODEL_NAME = f'{PROJECT_PATH}service'
+FLAG_MODEL_NAME = f'{PROJECT_PATH}flag'
+SC_MODEL_NAME = f'{PROJECT_PATH}sc'
+PCA_MODEL_NAME = f'{PROJECT_PATH}pca'
+
+with open(PROTO_MODEL_NAME, 'rb') as f:
+    proto_encoder = pickle.load(f)
+
+with open(SERVICE_MODEL_NAME, 'rb') as f:
+    service_encoder = pickle.load(f)
+
+with open(FLAG_MODEL_NAME, 'rb') as f:
+    flag_encoder = pickle.load(f)
+
+with open(SC_MODEL_NAME, 'rb') as f:
+    sc = pickle.load(f)
+
+with open(PCA_MODEL_NAME, 'rb') as f:
+    pca = pickle.load(f)
+
+
+def modelLoder(modelPath: str) -> Any:
+    with open(modelPath, 'rb') as f:
+        model = pickle.load(f)
+    return model
+
+def featureExt(df: pd.DataFrame) -> pd.DataFrame:
+    df['duration'] = df['duration'].astype(float)
+    df['protocol_type'] = df['protocol_type'].astype('category')
+    df['service'] = df['service'].astype('category')
+    df['flag'] = df['flag'].astype('category')
+    df['src_bytes'] = df['src_bytes'].astype(float)
+    df['dst_bytes'] = df['dst_bytes'].astype(float)
+    df['land'] = df['land'].astype('category')
+    df['wrong_fragment'] = df['wrong_fragment'].astype(float)
+    df['urgent'] = df['urgent'].astype(float)
+    df['count'] = df['count'].astype(float)
+    df['srv_count'] = df['srv_count'].astype(float)
+    df['serror_rate'] = df['serror_rate'].astype(float)
+    df['srv_serror_rate'] = df['srv_serror_rate'].astype(float)
+    df['rerror_rate'] = df['rerror_rate'].astype(float)
+    df['srv_rerror_rate'] = df['srv_rerror_rate'].astype(float)
+    df['same_srv_rate'] = df['same_srv_rate'].astype(float)
+    df['diff_srv_rate'] = df['diff_srv_rate'].astype(float)
+    df['srv_diff_host_rate'] = df['srv_diff_host_rate'].astype(float)
+    df['dst_host_count'] = df['dst_host_count'].astype(float)
+    df['dst_host_srv_count'] = df['dst_host_srv_count'].astype(float)
+    df['dst_host_same_srv_rate'] = df['dst_host_same_srv_rate'].astype(float)
+    df['dst_host_diff_srv_rate'] = df['dst_host_diff_srv_rate'].astype(float)
+    df['dst_host_same_src_port_rate'] = df['dst_host_same_src_port_rate'].astype(float)
+    df['dst_host_srv_diff_host_rate'] = df['dst_host_srv_diff_host_rate'].astype(float)
+    df['dst_host_serror_rate'] = df['dst_host_serror_rate'].astype(float)
+    df['dst_host_srv_serror_rate'] = df[ 'dst_host_srv_serror_rate'].astype(float)
+    df['dst_host_rerror_rate'] = df['dst_host_rerror_rate'].astype(float)
+    df['dst_host_srv_rerror_rate'] = df['dst_host_srv_rerror_rate'].astype(float)
+
+    df['protocol_type'] = proto_encoder.transform(df['protocol_type'].astype(object))
+    df['service'] = service_encoder.transform(df['service'].astype(object))
+    df['flag'] = flag_encoder.transform(df['flag'].astype(object))
+    print(df)
+    X_scaled = sc.transform(df)
+    X_pca = pca.transform(X_scaled)
+    print(X_pca)
+    return X_pca
+
+
+def detecter(model: Any, dataFrame: pd.DataFrame):
+    X = featureExt(dataFrame)
+    start_time = time.time()
+    result = model.predict(X)
+    print(result)
+    end_time = time.time()
+    print("Time", end_time-start_time)
+
+
+def packetScan(model: Any, numOfPacketPerBatch: int) -> None:
+    import subprocess
+    command = "sudo kdd99extractor"
+
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+
+    data = []
+    for line in iter(process.stdout.readline, b''):
+        row = line.decode('utf-8').strip().split(',')
+        data.append(row)
+
+        if len(data) == numOfPacketPerBatch:
+            df = pd.DataFrame(data, columns=COLUMNS)
+            detecter(model, df)
+            data = []
+
+    process.terminate()
+
+
+
+superlearner = modelLoder(MODEL_PATH)
+packetScan(superlearner, 4)
+
+
+
+"""
 X = df.drop(["labels","Subcategories"], axis=1)
 y = df["Subcategories"]
 
 ros = RandomOverSampler(random_state=0)
 X, y = ros.fit_resample(X, y)
 
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-sc = StandardScaler()
-X_scaled=sc.fit_transform(X)
-pca = PCA(n_components = 0.9)
-X_pca = pca.fit_transform(X_scaled)
-
 
 Xtrain_,Xtest_,Ytrain_,Ytest_ = train_test_split(X_pca,y, test_size=0.2, random_state=2, shuffle=True, stratify = y)
-
-MODEL_OBJECT_NAME = '/home/zin/lab/EEProject/app/model'
-
-with open(MODEL_OBJECT_NAME, 'rb') as f:
-    superLearner = pickle.load(f)
-
-start_time = time.time()
-
-testX = Xtest_[np.random.choice(Xtest_.shape[0], 4, replace=False)]
-result = superLearner.predict(Xtest_)
-print(result)
-
-end_time = time.time()
-print("Time", end_time-start_time)
+"""
