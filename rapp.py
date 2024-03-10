@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 
 EMAIL = "chriswangxxxxx@gmail.com"
 PASSWD = ""
-TO_EMAIL = "jiantingli25@yahoo.com"
+TO_EMAIL = ""
 
 COLUMNS = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
            'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'count', 'srv_count',
