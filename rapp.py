@@ -17,6 +17,15 @@ seed = 2017
 import sklearn.model_selection
 from mlens.ensemble import SuperLearner
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+
+EMAIL = ""
+PASSWD = ""
+TO_EMAIL = "chriswangxxxxx@gmail.com"
+
 COLUMNS = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
            'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'count', 'srv_count',
            'serror_rate', 'srv_serror_rate', 'rerror_rate', 'srv_rerror_rate',
@@ -119,11 +128,51 @@ def featureExt(df: pd.DataFrame) -> pd.DataFrame:
     #print(X_pca)
     return X_pca
 
+import socket
+
+def get_wlan_ip():
+    try:
+        # 獲取本機主機名
+        host_name = socket.gethostname()
+        # 獲取本機 IP 地址
+        ip_address = socket.gethostbyname(host_name)
+        return ip_address
+    except socket.error as e:
+        print("Error occurred while getting WLAN IP:", e)
+        return None
+
+def email(message: str):
+    subject = "Iot Device Alert"
+
+    machineIP = get_wlan_ip()
+    # 郵件內容
+    body = f"This is a alert email sent from {machineIP}."
+
+    # 設置郵件內容
+    msg = MIMEMultipart()
+    msg['From'] = EMAIL
+    msg['To'] = TO_EMAIL
+    msg['Subject'] = subject
+    msg.attach(MIMEText(body, 'plain'))
+
+    # 連接到 Gmail SMTP 伺服器
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(EMAIL, PASSWD)
+
+    # 發送郵件
+    text = msg.as_string()
+    server.sendmail(EMAIL, PASSWD, text)
+
+    # 關閉 SMTP 連接
+    server.quit()
 
 def alert(attacks: List[str]) -> None:
+    msg = ""
     for attack in attacks:
-        print(f"Alert! {attack.strip('.')} found!")
+        msg += f"Alert! {attack.strip('.')} found!\n"
 
+    email(msg)
 
 def detecter(model: Any, dataFrame: pd.DataFrame):
     X = featureExt(dataFrame)
@@ -155,6 +204,7 @@ def packetScan(model: Any, numOfPacketPerBatch: int) -> None:
             df = pd.DataFrame(data, columns=COLUMNS)
             detecter(model, df)
             data = []
+            break
 
     process.terminate()
 
