@@ -1,5 +1,5 @@
 import pickle
-from typing import Any
+from typing import Any, List
 import time
 import numpy as np
 import pandas as pd
@@ -26,6 +26,23 @@ COLUMNS = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
            'dst_host_srv_diff_host_rate', 'dst_host_serror_rate',
            'dst_host_srv_serror_rate', 'dst_host_rerror_rate',
            'dst_host_srv_rerror_rate']
+
+ATTACK_LABELS = [
+    'back.',
+    'buffer_overflow.',
+    'guess_passwd.',
+    'ipsweep.',
+    'neptune.',
+    'nmap.',
+    'portsweep.',
+    'rootkit.',
+    'satan.',
+    'smurf.',
+    'spy.',
+    'teardrop.',
+    'warezclient.',
+    'warezmaster.'
+]
 
 PROJECT_PATH = "/home/zin/lab/EEProject/app/"
 MODEL_PATH = f'{PROJECT_PATH}model'
@@ -90,23 +107,37 @@ def featureExt(df: pd.DataFrame) -> pd.DataFrame:
     df['dst_host_rerror_rate'] = df['dst_host_rerror_rate'].astype(float)
     df['dst_host_srv_rerror_rate'] = df['dst_host_srv_rerror_rate'].astype(float)
 
-    df['protocol_type'] = proto_encoder.transform(df['protocol_type'].astype(object))
-    df['service'] = service_encoder.transform(df['service'].astype(object))
-    df['flag'] = flag_encoder.transform(df['flag'].astype(object))
-    print(df)
+    try:
+        df['protocol_type'] = proto_encoder.transform(df['protocol_type'].astype(object))
+        df['service'] = service_encoder.transform(df['service'].astype(object))
+        df['flag'] = flag_encoder.transform(df['flag'].astype(object))
+    except ValueError:
+        return None
+    #print(df)
     X_scaled = sc.transform(df)
     X_pca = pca.transform(X_scaled)
-    print(X_pca)
+    #print(X_pca)
     return X_pca
+
+
+def alert(attacks: List[str]) -> None:
+    for attack in attacks:
+        print(f"Alert! {attack.strip('.')} found!")
 
 
 def detecter(model: Any, dataFrame: pd.DataFrame):
     X = featureExt(dataFrame)
+    if X is None:
+        return
     start_time = time.time()
-    result = model.predict(X)
-    print(result)
+    predictions = model.predict(X)
+
+    results = label_encoder.inverse_transform(predictions.astype(int))
+    attacks = [result for result in results if result in ATTACK_LABELS]
+    if attacks:
+        alert(attacks)
     end_time = time.time()
-    print("Time", end_time-start_time)
+    #print("Time", end_time-start_time)
 
 
 def packetScan(model: Any, numOfPacketPerBatch: int) -> None:
@@ -130,7 +161,7 @@ def packetScan(model: Any, numOfPacketPerBatch: int) -> None:
 
 
 superlearner = modelLoder(MODEL_PATH)
-packetScan(superlearner, 4)
+packetScan(superlearner, 32)
 
 
 
