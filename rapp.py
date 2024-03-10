@@ -1,30 +1,15 @@
 import pickle
 from typing import Any, List
 import time
-import numpy as np
 import pandas as pd
-import sys
-#Importing the library for Machine Learning Model building
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.neural_network import MLPClassifier
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-from sklearn.metrics import accuracy_score
-from mlens.model_selection import Evaluator
-from scipy.stats import randint
-seed = 2017
-
-import sklearn.model_selection
-from mlens.ensemble import SuperLearner
-
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-EMAIL = ""
+EMAIL = "chriswangxxxxx@gmail.com"
 PASSWD = ""
-TO_EMAIL = "chriswangxxxxx@gmail.com"
+TO_EMAIL = "jiantingli25@yahoo.com"
 
 COLUMNS = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
            'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'count', 'srv_count',
@@ -145,26 +130,22 @@ def email(message: str):
     subject = "Iot Device Alert"
 
     machineIP = get_wlan_ip()
-    # 郵件內容
-    body = f"This is a alert email sent from {machineIP}."
+    body = f"This is a alert email sent from {machineIP}.\n" + message
 
-    # 設置郵件內容
+
     msg = MIMEMultipart()
     msg['From'] = EMAIL
     msg['To'] = TO_EMAIL
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
 
-    # 連接到 Gmail SMTP 伺服器
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(EMAIL, PASSWD)
 
-    # 發送郵件
     text = msg.as_string()
-    server.sendmail(EMAIL, PASSWD, text)
+    server.sendmail(EMAIL, TO_EMAIL, text)
 
-    # 關閉 SMTP 連接
     server.quit()
 
 def alert(attacks: List[str]) -> None:
@@ -212,16 +193,3 @@ def packetScan(model: Any, numOfPacketPerBatch: int) -> None:
 
 superlearner = modelLoder(MODEL_PATH)
 packetScan(superlearner, 32)
-
-
-
-"""
-X = df.drop(["labels","Subcategories"], axis=1)
-y = df["Subcategories"]
-
-ros = RandomOverSampler(random_state=0)
-X, y = ros.fit_resample(X, y)
-
-
-Xtrain_,Xtest_,Ytrain_,Ytest_ = train_test_split(X_pca,y, test_size=0.2, random_state=2, shuffle=True, stratify = y)
-"""
