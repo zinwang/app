@@ -45,8 +45,7 @@ attacks_types = {
     'warezclient': 'r2l',
     'warezmaster': 'r2l',
 }
-df['Subcategories'] = df['labels'].str.decode('utf8').apply(lambda r: attacks_types[r[:-1]])
-df['Subcategories'] = df['Subcategories'].astype('category')
+
 
 COLUMNS = ['duration', 'protocol_type', 'service', 'flag', 'src_bytes',
            'dst_bytes', 'land', 'wrong_fragment', 'urgent', 'count', 'srv_count',
@@ -65,6 +64,7 @@ proto_encoder = LabelEncoder()
 service_encoder = LabelEncoder()
 flag_encoder = LabelEncoder()
 flag_encoder = LabelEncoder()
+label_encoder = LabelEncoder()
 
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
@@ -112,6 +112,11 @@ def featureExt(df: pd.DataFrame) -> pd.DataFrame:
 
 # Defining the data also dropping some unnecessary data
 X = featureExt(df[COLUMNS])
+
+#df['Subcategories'] = df['labels'].str.decode('utf8').apply(lambda r: attacks_types[r[:-1]])
+df['Subcategories'] = df['labels'].str.decode('utf8')
+df['Subcategories'] = df['Subcategories'].astype('category')
+df['Subcategories'] = label_encoder.fit_transform(df['Subcategories'])
 y = df["Subcategories"]
 
 PROTO_MODEL_NAME = 'proto'
@@ -119,6 +124,7 @@ SERVICE_MODEL_NAME = 'service'
 FLAG_MODEL_NAME = 'flag'
 SC_MODEL_NAME = 'sc'
 PCA_MODEL_NAME = 'pca'
+LABEL_MODEL_NAME = 'label'
 with open(PROTO_MODEL_NAME, 'wb') as f:
     pickle.dump(proto_encoder, f)
 
@@ -134,6 +140,8 @@ with open(SC_MODEL_NAME, 'wb') as f:
 with open(PCA_MODEL_NAME, 'wb') as f:
     pickle.dump(pca, f)
 
+with open(LABEL_MODEL_NAME, 'wb') as f:
+    pickle.dump(label_encoder, f)
 
 Xtrain_, Xtest_, Ytrain_, Ytest_ = train_test_split(X, y, test_size=0.2, random_state=2, shuffle=True, stratify = y)
 

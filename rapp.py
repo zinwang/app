@@ -35,6 +35,7 @@ SERVICE_MODEL_NAME = f'{PROJECT_PATH}service'
 FLAG_MODEL_NAME = f'{PROJECT_PATH}flag'
 SC_MODEL_NAME = f'{PROJECT_PATH}sc'
 PCA_MODEL_NAME = f'{PROJECT_PATH}pca'
+LABEL_MODEL_NAME = f'{PROJECT_PATH}label'
 
 with open(PROTO_MODEL_NAME, 'rb') as f:
     proto_encoder = pickle.load(f)
@@ -51,6 +52,8 @@ with open(SC_MODEL_NAME, 'rb') as f:
 with open(PCA_MODEL_NAME, 'rb') as f:
     pca = pickle.load(f)
 
+with open(LABEL_MODEL_NAME, 'rb') as f:
+    label_encoder = pickle.load(f)
 
 def modelLoder(modelPath: str) -> Any:
     with open(modelPath, 'rb') as f:
