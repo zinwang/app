@@ -117,9 +117,7 @@ import socket
 
 def get_wlan_ip():
     try:
-        # 獲取本機主機名
         host_name = socket.gethostname()
-        # 獲取本機 IP 地址
         ip_address = socket.gethostbyname(host_name)
         return ip_address
     except socket.error as e:
